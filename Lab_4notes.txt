@@ -1,0 +1,17 @@
+Calibration:
+steps = 360 
+Frequency = 500kHz
+
+Exercise 3:
+Run 0: 4096
+Run 1: 1500
+Run 2: 1000
+Run 3: 1250
+
+Exercise 1:
+- Corner with dot is where transmitted intensity is maximized, and so is corner opposite to it
+- The side with line removes all light reflected off the floor when it is parallel to the floor. 
+	The light reflected off the floor is parallel to line on polarized sheet
+	We conclude that it's polarized perp. to line 
+- Arrows are pointed along axis of polarization
+
