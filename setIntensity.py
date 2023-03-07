@@ -34,16 +34,18 @@ device = "/dev/ttyACM0"
 # the serial port with the Arduino
 a = laserClass2022.Arduino(device = device, verbose = 0)
 
+
+
 # The number of measurements you wish you take, this variable also specifies
 # the number of steps taken by the motor
 steps = 360
 # This has to be calibrated by you
 degsPerStep = 1
 # Laser control voltage
-intensity = '1700'
+intensity = "1600"
 a.send("LASER " + intensity)
 # Total number of steps
-#a.send(f"STEPS {steps}")
+a.send(f"STEPS {steps}")
 # Delay time before reading value (ms), >4 recommended
 a.send("DELAY 4")
 # Start the stepping/reading
@@ -98,12 +100,19 @@ adcValuesnp = np.array(adcValues)
 
 # Basic plot of ADC value per calibrated degree
 # Useful for a quick check of th data's quality
-plt.plot(stepCountsCal, adcValuesnp)
-plt.title("{}".format(intensity))
+#plt.plot(stepCountsCal, adcValuesnp)
+#plt.title("{}".format(intensity))
 
 # Shuts down laser
 a.send("LASER 0")
-np.savetxt("E_1_intensity_{}_run1.csv".format(intensity),adcValuesnp, delimiter = ",")
+
+print(np.mean(adcValuesnp))
+#out[n] = np.mean(adcValuesnp)
+
+print("Laser should have turned off by now")
+
+#plt.plot(intensities, out)
+#plt.show()
+
 # Closes port
 a.closePort()
-print("Laser should have turned off by now")
