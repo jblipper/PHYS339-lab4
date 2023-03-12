@@ -29,10 +29,22 @@ C = [x/R for x in V]
 print(C)
 
 #Error of current, added in quadrature with errors of V and R
+errx = []
+for i in range(0,25):
+    Cerr = C[i]*((errV/V[i]) + (errR/R))
+    errx.append(Cerr)
+    
+def LinearPiecewise(x, ):
+    #return 
 
+popt, pcov = curve_fit(LinearPiecewise, xdata = C,)
+    
 
 #print(err3)
 f = plt.figure(figsize=(8,6))
-plt.plot(C, I3)
+plt.errorbar(C, I3, xerr=errx, capsize = 5, capthick = 1.5, elinewidth=3)
+plt.title('Laser Intensity vs. Current')
+plt.xlabel('Current(A)')
+plt.ylabel('Laser Intensity(arb. units)')
 
 plt.show()
