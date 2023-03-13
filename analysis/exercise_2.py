@@ -27,10 +27,15 @@ V3 = np.array([0.003,0.129,0.246,0.369,0.493,0.617,0.737,0.857,0.982,1.109,1.232
 V = (V2+V3)/2
 errV = 0.01
 print(V)
+
+
 # Getting current values from Ohm's law (I = V/R)
 C = np.array([x/R for x in V], dtype = float)
+
+# Converting intensity to adc values from calibration curve
 I_new = [2.66233854e+02*erf(2.11948436e-02*(x-1.24771088e+03))+2.67390488e+02 for x in I3]
 print(I_new)
+
 #Error of current, added in quadrature with errors of V and R
 errx = []
 for i in range(0,25):
@@ -40,25 +45,31 @@ for i in range(0,25):
 def LinearPiecewise(x, x0, y0, k1, k2):
     return np.piecewise(x, [x < x0], [lambda x:k1*x + y0-k1*x0, lambda x:k2*x + y0-k2*x0])
 
-#def LinearPiecewise(x, x0, a, b, c):
-    #y = a*np.abs(x-x0) + b*x + c
-    #return y
-
 popt, pcov = curve_fit(LinearPiecewise, C, I_new, p0=[0, 0, 1.0, 100.0])
 
 
+def Exponential(x, a, b):
+    return a*np.exp(b*x)
 
-f = plt.figure(figsize=(8,6))
+popt1, pcov1 = curve_fit(Exponential, C, I_new, p0= [1,700])
+
+
+#chierf = chisquare(I_new, LinearPiecewise(C, *popt))
+#chiexp = chisquare(I_new, Exponential(C, *popt1))
+
+f = plt.figure(figsize=(9,6))
 xd = np.linspace(0, max(C), 100)
 #plt.plot(C_new, I3)
 plt.errorbar(C, I_new, xerr=errx, capsize = 5, capthick = 1.5, elinewidth = 3)
-plt.plot(xd, LinearPiecewise(xd, *popt), label = 'Piecewise linear fit')
+plt.plot(xd, LinearPiecewise(xd, *popt),'g', label = 'Piecewise linear fit')
+plt.plot(xd, Exponential(xd, *popt1),'r', label = 'Exponential fit')
 plt.title('Input Laser Intensity vs. Current')
 plt.xlabel('Current(A)')
 plt.ylabel('Input Laser Intensity(arb. units)')
 plt.legend(fontsize = 18)
 plt.show()
-print(popt)
+print("Linear paramters are:", popt)
+print("Exponential parameters are:", popt1)
     
 
 #print(err3)

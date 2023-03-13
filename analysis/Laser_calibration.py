@@ -9,10 +9,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 from scipy.special import erf, expit
+from scipy.stats import chisquare
 
 
 
 plt.rcParams.update({'font.size': 18})
+paths = ["../data/detector_response_2.csv",
+         "../data/detector_response_3.csv",
+         "../data/detector_response_4.csv",
+        ]
+
 
 file = 'detector_response.csv'
 data = np.genfromtxt(file, delimiter = ",")
@@ -53,10 +59,7 @@ print('Chi2 for erf is:', chierf)
 print('Chi2 for arctan is:', chiarctan)
 print('Chi2 for step is:', chistep)
 
-def chi2(observed, expected, err):
-    return np.sum((observed - expected)**2/err**2)
 
-chi2(mean, cos_squared(deg, popt[0], popt[1]), err)
 
 
 

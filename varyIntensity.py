@@ -27,8 +27,8 @@ import numpy as np
 
 #-----------------------------------------------------------------------------!
 # Ensure that this string contains the correct COM port number!
-#device = 'COM3'
-device = "/dev/ttyACM0"
+device = 'COM3'
+#device = "/dev/ttyACM0"
 
 # Create an instance of the "Arduino" class, which communicates through
 # the serial port with the Arduino
@@ -113,7 +113,7 @@ for n, i in enumerate(intensities):
 
 print("Laser should have turned off by now")
 data = np.concatenate((intensities[:,np.newaxis], out[:,np.newaxis]), axis=1)
-np.savetxt("./data/detector_response_2.csv", data, delimiter=",")
+np.savetxt("./data/detector_response_4.csv", data, delimiter=",")
 plt.plot(intensities, out)
 plt.show()
 

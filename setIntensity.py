@@ -27,8 +27,8 @@ import numpy as np
 
 #-----------------------------------------------------------------------------!
 # Ensure that this string contains the correct COM port number!
-#device = 'COM3'
-device = "/dev/ttyACM0"
+device = 'COM3'
+#device = "/dev/ttyACM0"
 
 # Create an instance of the "Arduino" class, which communicates through
 # the serial port with the Arduino
@@ -38,7 +38,7 @@ a = laserClass2022.Arduino(device = device, verbose = 0)
 
 # The number of measurements you wish you take, this variable also specifies
 # the number of steps taken by the motor
-steps = 360
+steps = 720
 # This has to be calibrated by you
 degsPerStep = 1
 # Laser control voltage
